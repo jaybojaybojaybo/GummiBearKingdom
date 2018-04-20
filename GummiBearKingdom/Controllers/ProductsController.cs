@@ -59,6 +59,15 @@ namespace GummiBearKingdom.Controllers
             return View(product);
         }
 
+        //GET: Product/Delete/id
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .SingleOrDefaultAsync(m => m.ProductId == id);
+            return View(product);
+        }
+
         //POST: Product/Delete/id
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -66,6 +75,26 @@ namespace GummiBearKingdom.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        //GET: Product/Edit/id
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .SingleOrDefaultAsync(m => m.ProductId == id);
+            return View(product);
+        }
+
+        //POST: Product/Edit/id
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId, Name, Description, Price, CategoryId")] Product product)
+        {
+            _context.Update(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
+            return View(product);
         }
     }
 }

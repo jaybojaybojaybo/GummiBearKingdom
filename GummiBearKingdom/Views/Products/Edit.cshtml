@@ -1,5 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model GummiBearKingdom.Models.Product
+
+
+<html>
+<head>
+	<title>Edit</title>
+</head>
+<body>
+	<form asp-action="Edit">
+		<div class="edit-form">
+			<h4>@Html.DisplayFor(model => model.Name)</h4>
+			<hr />
+			<input type="hidden" asp-for="ProductId" />
+			<div class="form-group">
+				<label asp-for="Name" class="col-md-2" />
+				<input asp-for="Name" class="form-control col-md-10" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Description" class="col-md-2" />
+				<input asp-for="Description" class="form-control col-md-10" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Price" class="col-md-2" />
+				<input asp-for="Price" class="form-control col-md-10" />
+			</div>
+			//Drop down menu for picking categories
+			<div class="form-group">
+				<label asp-for="CategoryId" class="control-label col-md-2"></label>
+					<select asp-for="CategoryId" class="form-control col-md-10" asp-items="ViewBag.CategoryId"></select>
+			</div>
+
+			<div class="form-group">
+				<div>
+					<input type="submit" value="Save" class="btn btn-default" />
+				</div>
+			</div>
+		</div>
+	</form>
+	<div>
+		<a asp-action="Index">Back to Product List</a>
+	</div>
+</body>
+</html>
