@@ -94,5 +94,21 @@ namespace GummiBearKingdom.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
             return RedirectToAction("Index");
         }
+
+        //GET: Product/DeleteAll
+        public async Task<IActionResult> DeleteAll()
+        {
+            var gummiDbContext = _context.Products.Include(p => p.Category);
+            return View(await gummiDbContext.ToListAsync());
+        }
+
+        //POST: Product/Delete/id
+        [HttpPost, ActionName("DeleteAll")]
+        public async Task<IActionResult> DeleteAllConfirmed()
+        {
+            _context.Database.ExecuteSqlCommand("TRUNCATE TABLE products");
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

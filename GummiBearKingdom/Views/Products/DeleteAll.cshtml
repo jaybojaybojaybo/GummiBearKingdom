@@ -1,0 +1,19 @@
+﻿@model IEnumerable<GummiBearKingdom.Models.Product>
+
+<html>
+<head>
+	<title>Delete All</title>
+</head>
+<body>
+	<h3>Are you sure you want to delete all the products?</h3>
+
+	<form asp-action="DeleteAll">
+		<div class="form-actions">
+			<input type="submit" value="DeleteAll" class="btn btn-danger" />
+		</div>
+	</form>
+	<a asp-controller="Products" asp-action="Index">Cancel</a>
+
+</body>
+
+</html>
