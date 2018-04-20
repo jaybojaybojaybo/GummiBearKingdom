@@ -38,16 +38,12 @@ namespace GummiBearKingdom.Controllers
 
         //POST: Product/Create
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("ProductId, Name, Description, Price, CatagoryId")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId, Name, Description, Price, CategoryId")] Product product)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
-            return View(product);
+            _context.Add(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         //GET: Product/Details/id
@@ -92,9 +88,8 @@ namespace GummiBearKingdom.Controllers
         {
             _context.Update(product);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
-            return View(product);
+            return RedirectToAction("Index");
         }
     }
 }

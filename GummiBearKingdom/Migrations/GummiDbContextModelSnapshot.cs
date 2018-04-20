@@ -36,8 +36,6 @@ namespace GummiBearKingdom.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Image");
-
                     b.Property<string>("Name");
 
                     b.Property<int>("Price");
@@ -46,7 +44,7 @@ namespace GummiBearKingdom.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("GummiBearKingdom.Models.Product", b =>

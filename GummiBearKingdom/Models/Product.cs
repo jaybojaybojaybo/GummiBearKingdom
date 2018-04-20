@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GummiBearKingdom.Models
 {
-    [Table("Product")]
+    [Table("Products")]
     public class Product
     {
         [Key]
@@ -15,7 +15,6 @@ namespace GummiBearKingdom.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public string Image { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
     }

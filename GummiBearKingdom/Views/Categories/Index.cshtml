@@ -5,33 +5,34 @@
 	<title>Categories</title>
 </head>
 <body>
-	<h1>Products</h1>
+	<h1>Categories</h1>
 
 	<div>
 		<div class="row">
-			@foreach(var category in Model)
-			{
-				<div class="col">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>
-									@Html.DisplayNameFor(model => model.Name)
-								</th>
-							</tr>
-						</thead>
-						<tbody>
+
+			<div class="col">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								Category Name
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var category in Model)
+						{
 							<tr>
 								<td>
 									@Html.DisplayFor(modelCategory => category.Name)
 								</td>
 							</tr>
-						</tbody>
-					</table>
-				</div>
-
-			}
+						}
+					</tbody>
+				</table>
+			</div>
 		</div>
-
+	</div>
+	<a class="btn btn-info" asp-action="Create">Create New Category</a>
 </body>
 </html>

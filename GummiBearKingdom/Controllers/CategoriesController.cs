@@ -26,5 +26,27 @@ namespace GummiBearKingdom.Controllers
         {
             return View(await _context.Categories.ToListAsync());
         }
+        //GET: Categories/Details/id
+        public async Task<IActionResult> Details(int id)
+        {
+            var category = await _context.Categories.Include(c => c.Products)
+                .SingleOrDefaultAsync(p => p.CategoryId == id);
+            return View(category);
+        }
+
+        //GET: Categories/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST: Categories/Create
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("CategoryId, Name")] Category category)
+        {
+            _context.Add(category);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
