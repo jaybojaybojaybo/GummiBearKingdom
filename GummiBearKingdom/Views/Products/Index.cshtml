@@ -6,48 +6,54 @@
 }
 
 @model IEnumerable<GummiBearKingdom.Models.Product>
+<html>
+<head>
+	<title>Products</title>
+</head>
+<body>
+	<h1>Products</h1>
 
-<h1>Products</h1>
-
-<div>
-	<div class="row">
-		@foreach (var product in Model)
-		{
-			<div class="col">
-				<div class="image">
-					<img src="@product.Image" />
+	<div>
+		<div class="row">
+			@foreach (var product in Model)
+			{
+				<div class="col">
+					<div class="image">
+						<img src="@product.Image" />
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									@Html.DisplayNameFor(model => model.Name)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.Description)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.Price)
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									@Html.DisplayFor(modelProduct => product.Name)
+								</td>
+								<td>
+									@Html.DisplayFor(modelProduct => product.Description)
+								</td>
+								<td>
+									@Html.DisplayFor(modelProduct => product.Price)
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>
-								@Html.DisplayNameFor(model => model.Name)
-							</th>
-							<th>
-								@Html.DisplayNameFor(model => model.Description)
-							</th>
-							<th>
-								@Html.DisplayNameFor(model => model.Price)
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								@Html.DisplayFor(modelProduct => product.Name)
-							</td>
-							<td>
-								@Html.DisplayFor(modelProduct => product.Description)
-							</td>
-							<td>
-								@Html.DisplayFor(modelProduct => product.Price)
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 
-		}
-
+			}
+		</div>
+		<a class="btn btn-info" asp-action="Create">Create New Product</a>
 	</div>
-</div>
+</body>
+</html>
