@@ -58,5 +58,14 @@ namespace GummiBearKingdom.Controllers
                 .SingleOrDefaultAsync(m => m.ProductId == id);
             return View(product);
         }
+
+        //POST: Product/Delete/id
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var product = await _context.Products.SingleOrDefaultAsync(p => p.ProductId == id);
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
