@@ -65,6 +65,7 @@ namespace GummiBearKingdom.Controllers
         }
 
         //POST: Product/Delete/id
+        [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.SingleOrDefaultAsync(p => p.ProductId == id);
