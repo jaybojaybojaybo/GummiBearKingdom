@@ -13,16 +13,9 @@ namespace GummiBearKingdom.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "If you need any assistance, please contact the departments below.";
 
             return View();
         }
