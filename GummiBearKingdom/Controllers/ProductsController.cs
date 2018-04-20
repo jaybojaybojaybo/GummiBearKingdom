@@ -78,7 +78,9 @@ namespace GummiBearKingdom.Controllers
         {
             var product = await _context.Products
                 .Include(p => p.Category)
-                .SingleOrDefaultAsync(m => m.ProductId == id);
+                .SingleOrDefaultAsync(c => c.ProductId == id);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
+
             return View(product);
         }
 
