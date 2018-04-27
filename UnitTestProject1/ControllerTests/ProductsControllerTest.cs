@@ -97,5 +97,26 @@ namespace GummiBearKingdomTests.ControllerTests
             //Assert
             CollectionAssert.Contains(collection, testProduct);
         }
+
+        [TestMethod]
+        public void Mock_PostViewResultCreate_ViewResult()
+        {
+            //Arrange
+            Product testProduct = new Product();
+            testProduct.ProductId = 3;
+            testProduct.Name = "plummi bear";
+            testProduct.Description = "bear made of plums";
+            testProduct.Price = 3;
+            testProduct.CategoryId = 2;
+
+            DbSetup();
+            ProductsController controller = new ProductsController(mock.Object);
+
+            //Act
+            var resultView = controller.Create(testProduct);
+
+            //Assert
+            Assert.IsInstanceOfType(resultView, typeof(ActionResult));
+        }
     }
 }
