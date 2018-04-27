@@ -103,9 +103,9 @@ namespace GummiBearKingdomTests.ControllerTests
         {
             //Arrange
             Product testProduct = new Product();
-            testProduct.ProductId = 3;
-            testProduct.Name = "plummi bear";
-            testProduct.Description = "bear made of plums";
+            testProduct.ProductId = 1;
+            testProduct.Name = "gummi bear";
+            testProduct.Description = "yummy treat";
             testProduct.Price = 3;
             testProduct.CategoryId = 2;
 
@@ -113,10 +113,10 @@ namespace GummiBearKingdomTests.ControllerTests
             ProductsController controller = new ProductsController(mock.Object);
 
             //Act
-            var resultView = controller.Create(testProduct);
+            var resultView = controller.Create(testProduct) as ViewResult;
 
             //Assert
-            Assert.IsInstanceOfType(resultView, typeof(ActionResult));
+            Assert.IsInstanceOfType(resultView, typeof(ViewResult));
         }
 
         [TestMethod]
@@ -140,7 +140,49 @@ namespace GummiBearKingdomTests.ControllerTests
             //Assert
             Assert.IsInstanceOfType(resultView, typeof(ViewResult));
             Assert.IsInstanceOfType(model, typeof(Product));
-
         }
+
+        [TestMethod]
+        public void Mock_PostResultViewEdit_ViewResult()
+        {
+            //Arrange
+            Product testProduct = new Product();
+            testProduct.ProductId = 2;
+            testProduct.Name = "plummi beer";
+            testProduct.Description = "beer made of plums";
+            testProduct.Price = 3;
+            testProduct.CategoryId = 2;
+
+            DbSetup();
+            ProductsController controller = new ProductsController(mock.Object);
+
+            //Act
+            var resultView = controller.Edit(testProduct.ProductId) as ViewResult;
+
+            //Assert
+            Assert.IsInstanceOfType(resultView, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Mock_PostResultViewDelete_ViewResult()
+        {
+            //Arrange
+            Product testProduct = new Product();
+            testProduct.ProductId = 2;
+            testProduct.Name = "plummi beer";
+            testProduct.Description = "beer made of plums";
+            testProduct.Price = 3;
+            testProduct.CategoryId = 2;
+
+            DbSetup();
+            ProductsController controller = new ProductsController(mock.Object);
+
+            //Act
+            var resultView = controller.Delete(testProduct.ProductId) as ViewResult;
+
+            //Assert
+            Assert.IsInstanceOfType(resultView, typeof(ViewResult));
+        }
+
     }
 }
