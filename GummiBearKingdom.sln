@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GummiBearKingdom", "GummiBearKingdom\GummiBearKingdom.csproj", "{EC10C353-6289-45F8-9A6B-72C30E3F595B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GummiBearKingdom", "GummiBearKingdom\GummiBearKingdom.csproj", "{EC10C353-6289-45F8-9A6B-72C30E3F595B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GummiBearKingdom.Tests", "UnitTestProject1\GummiBearKingdom.Tests.csproj", "{7CB22FFC-68ED-4B7D-B276-97FE8B64CABC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EC10C353-6289-45F8-9A6B-72C30E3F595B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC10C353-6289-45F8-9A6B-72C30E3F595B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC10C353-6289-45F8-9A6B-72C30E3F595B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB22FFC-68ED-4B7D-B276-97FE8B64CABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB22FFC-68ED-4B7D-B276-97FE8B64CABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB22FFC-68ED-4B7D-B276-97FE8B64CABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB22FFC-68ED-4B7D-B276-97FE8B64CABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
