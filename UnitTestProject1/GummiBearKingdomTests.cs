@@ -30,17 +30,49 @@ namespace GummiBearKingdom.Tests
         }
 
         [TestMethod]
-        public void GetName_ReturnsProductName_String()
+        public void Constructor_ReturnsProductName_String()
         {
             //Arrange
             var product = new Product();
-            product.Name = "toy";
+            product.ProductId = 1;
+            product.Name = "gummi bear";
+            product.Description = "yummy treat";
+            product.Price = 3;
+            product.CategoryId = 2;
+
 
             //Act
-            var result = product.Name;
+            var result = product;
 
             //Assert
-            Assert.AreEqual("toy", result);
+            Assert.AreEqual("gummi bear", result.Name);
+        }
+
+        [TestMethod]
+        public void Equals_ReturnsTrueIfProductsAreTheSame_Product()
+        {
+            //Arrange
+            var product = new Product();
+            product.ProductId = 1;
+            product.Name = "gummi bear";
+            product.Description = "yummy treat";
+            product.Price = 3;
+            product.CategoryId = 2;
+
+            var product2 = new Product();
+            product2.ProductId = 1;
+            product2.Name = "gummi bear";
+            product2.Description = "yummy treat";
+            product2.Price = 3;
+            product2.CategoryId = 2;
+
+
+            //Act
+            var result = product;
+            var result2 = product2;
+
+            //Assert
+            Assert.AreEqual(result, result2);
         }
     }
 }
