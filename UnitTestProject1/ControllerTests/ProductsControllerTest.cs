@@ -13,11 +13,10 @@ namespace GummiBearKingdomTests.ControllerTests
     [TestClass]
     public class ProductsControllerTest
     {
-        [TestMethod]
-        public void ProductsController_IndexModelContainsCorrectData_List()
+        Mock<IGummiRepository> mock = new Mock<IGummiRepository>();
+
+        private void DbSetup()
         {
-            //Arrange
-            Mock<IGummiRepository> mock = new Mock<IGummiRepository>();
             mock.Setup(m => m.Products).Returns(new Product[]
             {
                 new Product{
@@ -32,8 +31,13 @@ namespace GummiBearKingdomTests.ControllerTests
                     Description = "funny toy",
                     Price = 12,
                     CategoryId = 1 }
+            }.AsQueryable());
+        }
 
-        }.AsQueryable());
+        [TestMethod]
+        public void ProductsController_IndexModelContainsCorrectData_List()
+        {
+            //Arrange
             ProductsController controller = new ProductsController();
             IActionResult actionResult = controller.Index();
             ViewResult indexView = new ProductsController(mock.Object).Index() as ViewResult;
@@ -43,6 +47,20 @@ namespace GummiBearKingdomTests.ControllerTests
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(List<Product>));
+        }
+
+        [TestMethod]
+        public void Mock_GetViewResultIndex_ActionResult()
+        {
+            //Arrange
+            DbSetup();
+            ProductsController controller = new ProductsController(mock.Object);
+
+            //Act
+            var result = controller.Index();
+
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ActionResult));
         }
     }
 }
