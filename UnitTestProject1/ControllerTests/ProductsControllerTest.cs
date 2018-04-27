@@ -113,7 +113,7 @@ namespace GummiBearKingdomTests.ControllerTests
             ProductsController controller = new ProductsController(mock.Object);
 
             //Act
-            var resultView = controller.Create(testProduct) as ViewResult;
+            var resultView = (ViewResult)controller.Create();
 
             //Assert
             Assert.IsInstanceOfType(resultView, typeof(ViewResult));
