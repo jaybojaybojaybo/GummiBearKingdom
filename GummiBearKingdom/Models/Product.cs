@@ -18,14 +18,14 @@ namespace GummiBearKingdom.Models
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
-        public Product(int productId, string name, string description, int price, int categoryId)
-        {
-            this.ProductId = productId;
-            this.Name = name;
-            this.Description = description;
-            this.Price = price;
-            this.CategoryId = categoryId;
-        }
+        //public Product(int productId, string name, string description, int price, int categoryId)
+        //{
+        //    this.ProductId = productId;
+        //    this.Name = name;
+        //    this.Description = description;
+        //    this.Price = price;
+        //    this.CategoryId = categoryId;
+        //}
         public override bool Equals(System.Object otherProduct)
         {
             if (!(otherProduct is Product))

@@ -33,12 +33,15 @@ namespace GummiBearKingdom.Tests
         public void Constructor_ReturnsProductName_String()
         {
             //Arrange
-            var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
-            //product.ProductId = 1;
-            //product.Name = "gummi bear";
-            //product.Description = "yummy treat";
-            //product.Price = 3;
-            //product.CategoryId = 2;
+            //Comment in below, when testing constructor
+            //var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
+            //Comment in below, when testing controllers
+            var product = new Product();
+            product.ProductId = 1;
+            product.Name = "gummi bear";
+            product.Description = "yummy treat";
+            product.Price = 3;
+            product.CategoryId = 2;
 
 
             //Act
@@ -52,27 +55,30 @@ namespace GummiBearKingdom.Tests
         public void Equals_ReturnsTrueIfProductsAreTheSame_Product()
         {
             //Arrange
-            var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
-            //product.ProductId = 1;
-            //product.Name = "gummi bear";
-            //product.Description = "yummy treat";
-            //product.Price = 3;
-            //product.CategoryId = 2;
 
-            var product2 = new Product(1, "gummi bear", "yummy treat", 3, 2);
-            //product2.ProductId = 1;
-            //product2.Name = "gummi bear";
-            //product2.Description = "yummy treat";
-            //product2.Price = 3;
-            //product2.CategoryId = 2;
+            //Comment in below, when testing constructor
+            //var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
+            //Comment in below, when testing controllers
+            var product = new Product();
+            product.ProductId = 1;
+            product.Name = "gummi bear";
+            product.Description = "yummy treat";
+            product.Price = 3;
+            product.CategoryId = 2;
 
+            //Comment in below, when testing constructor
+            //var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
+            //Comment in below, when testing controllers
+            var product2 = new Product();
+            product.ProductId = 1;
+            product.Name = "gummi bear";
+            product.Description = "yummy treat";
+            product.Price = 3;
+            product.CategoryId = 2;
 
-            //Act
-            var result = product;
-            var result2 = product2;
 
             //Assert
-            Assert.AreEqual(result, result2);
+            Assert.AreEqual(product.Name, product2.Name);
         }
     }
 }
