@@ -118,5 +118,29 @@ namespace GummiBearKingdomTests.ControllerTests
             //Assert
             Assert.IsInstanceOfType(resultView, typeof(ActionResult));
         }
+
+        [TestMethod]
+        public void Mock_GetDetails_ReturnsView()
+        {
+            //Arrange
+            Product testProduct = new Product();
+            testProduct.ProductId = 1;
+            testProduct.Name = "gummi bear";
+            testProduct.Description = "yummy treat";
+            testProduct.Price = 3;
+            testProduct.CategoryId = 2;
+
+            DbSetup();
+            ProductsController controller = new ProductsController(mock.Object);
+
+            //Act
+            var resultView = controller.Details(testProduct.ProductId) as ViewResult;
+            var model = resultView.ViewData.Model as Product;
+
+            //Assert
+            Assert.IsInstanceOfType(resultView, typeof(ViewResult));
+            Assert.IsInstanceOfType(model, typeof(Product));
+
+        }
     }
 }
