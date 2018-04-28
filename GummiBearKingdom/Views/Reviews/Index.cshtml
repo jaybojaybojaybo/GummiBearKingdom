@@ -1,0 +1,21 @@
+﻿@model GummiBearKingdom.Models.Product
+
+<head>
+	<title>Reviews for @Html.DisplayFor(model => model.ProductId)</title>
+</head>
+<body>
+	<div>
+		<h2>
+			@Html.DisplayFor(model => model.Name)
+		</h2>
+		<hr />
+		<h4>Description: </h4>
+		<p>@Html.DisplayFor(model => model.Description)</p>
+		<h4>Category</h4>
+		<p>@Html.DisplayFor(model => model.Category.Name)</p>
+	</div>
+	<div>
+		<a asp-action="Edit" asp-route-id="@Model.ProductId">Edit Product</a> |
+		<a asp-action="Index">Back to Product List</a>
+	</div>
+</body>
