@@ -41,7 +41,7 @@ namespace GummiBearKingdom.Controllers
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", review.ProductId);
             _context.Add(review);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Products");
         }
     }
 }

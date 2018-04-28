@@ -13,6 +13,8 @@
 		<p>@Html.DisplayFor(model => model.Description)</p>
 		<h4>Category</h4>
 		<p>@Html.DisplayFor(model => model.Category.Name)</p>
+		<h4>Reviews</h4>
+		<p>@Html.Partial("~/Views/ControllerB/Index(@Model.ProductId)")</p>
 	</div>
 	<div>
 		<a asp-action="Edit" asp-route-id="@Model.ProductId">Edit Product</a> |
