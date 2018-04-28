@@ -11,21 +11,43 @@
 		<hr />
 		<h4>Description: </h4>
 		<p>@Html.DisplayFor(model => model.Description)</p>
-		<h4>Category</h4>
+		<h4>Category:</h4>
 		<p>@Html.DisplayFor(model => model.Category.Name)</p>
 	</div>
 	<div>
-		<h5>Reviews</h5>
+		<h4>Reviews:</h4>
 		<ul>
 			@foreach (var rev in Model.Reviews)
 			{
 				<li>
-				<h6>Author:</h6>
-					@Html.DisplayFor(modelItem => rev.Author)
-				<h6>Rating:</h6>
-					@rev.rating
-				<h6>Review:</h6>
-					<p>@Html.DisplayFor(modelItem => rev.Content_Body)</p>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									Author
+								</th>
+								<th>
+									Rating
+								</th>
+								<th>
+									Review
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									@rev.Author
+								</td>
+								<td>
+									@rev.rating
+								</td>
+								<td>
+									@rev.Content_Body
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</li>
 
 			}
