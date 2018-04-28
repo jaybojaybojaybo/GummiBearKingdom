@@ -1,4 +1,4 @@
-﻿@model GummiBearKingdom.Models.Product
+﻿@model GummiBearKingdom.Models.Review
 
 <head>
 	<title>Reviews for @Html.DisplayFor(model => model.ProductId)</title>
@@ -6,16 +6,14 @@
 <body>
 	<div>
 		<h2>
-			@Html.DisplayFor(model => model.Name)
+			@Html.DisplayFor(model => model.Author)
 		</h2>
 		<hr />
-		<h4>Description: </h4>
-		<p>@Html.DisplayFor(model => model.Description)</p>
-		<h4>Category</h4>
-		<p>@Html.DisplayFor(model => model.Category.Name)</p>
+		<h4>Review: </h4>
+		<p>@Html.DisplayFor(model => model.Content_Body)</p>
 	</div>
 	<div>
-		<a asp-action="Edit" asp-route-id="@Model.ProductId">Edit Product</a> |
-		<a asp-action="Index">Back to Product List</a>
+		<a asp-action="Edit" asp-route-id="@Model.ReviewId">Edit Review</a> |
+		<a asp-controller="Products" asp-action="Index">Back to Product List</a>
 	</div>
 </body>

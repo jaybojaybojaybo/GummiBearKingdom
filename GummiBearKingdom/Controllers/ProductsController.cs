@@ -126,6 +126,7 @@ namespace GummiBearKingdom.Controllers
         {
             var product = await _context.Products
                 .Include(p => p.Category)
+                .Include(r => r.Reviews)
                 .SingleOrDefaultAsync(m => m.ProductId == id);
             return View(product);
         }

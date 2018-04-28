@@ -13,8 +13,25 @@
 		<p>@Html.DisplayFor(model => model.Description)</p>
 		<h4>Category</h4>
 		<p>@Html.DisplayFor(model => model.Category.Name)</p>
-		<h4>Reviews</h4>
-		<p>@Html.Partial("~/Views/ControllerB/Index(@Model.ProductId)")</p>
+	</div>
+	<div>
+		<h5>Reviews</h5>
+		<ul>
+			@foreach (var rev in Model.Reviews)
+			{
+				<li>
+				<h6>Author:</h6>
+					@Html.DisplayFor(modelItem => rev.Author)
+				<h6>Rating:</h6>
+					@rev.rating
+				<h6>Review:</h6>
+					<p>@Html.DisplayFor(modelItem => rev.Content_Body)</p>
+				</li>
+
+			}
+		</ul>
+		<a class="">@Html.ActionLink("Add Review", "Create", "Reviews")</a>
+		<hr />
 	</div>
 	<div>
 		<a asp-action="Edit" asp-route-id="@Model.ProductId">Edit Product</a> |
