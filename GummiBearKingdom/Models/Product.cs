@@ -17,6 +17,7 @@ namespace GummiBearKingdom.Models
         public int Price { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
         public override bool Equals(System.Object otherProduct)
         {

@@ -47,11 +47,39 @@ namespace GummiBearKingdom.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("GummiBearKingdom.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("Content_Body");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<int>("rating");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("GummiBearKingdom.Models.Product", b =>
                 {
                     b.HasOne("GummiBearKingdom.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GummiBearKingdom.Models.Review", b =>
+                {
+                    b.HasOne("GummiBearKingdom.Models.Product", "Product")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }
