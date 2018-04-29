@@ -3,14 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using GummiBearKingdom.Models;
+using GummiBearKingdom.Controllers;
 
 namespace GummiBearKingdom.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly GummiDbContext _context;
+
+        public HomeController(GummiDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var gummiDbContext = _context.Products
+                .Include(p => p.Category)
+                .Include(r => r.Reviews);
+            return View(await gummiDbContext.ToListAsync());
         }
 
         public IActionResult Contact()
