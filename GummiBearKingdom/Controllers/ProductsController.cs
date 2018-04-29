@@ -100,7 +100,9 @@ namespace GummiBearKingdom.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            var gummiDbContext = _context.Products.Include(p => p.Category);
+            var gummiDbContext = _context.Products
+                .Include(p => p.Category)
+                .Include(r => r.Reviews);
             return View(await gummiDbContext.ToListAsync());
         }
 

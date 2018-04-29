@@ -36,5 +36,21 @@ namespace GummiBearKingdom.Models
         {
             return this.ProductId.GetHashCode();
         }
+
+        public int GetAvgRate(Product product)
+        {
+            if (product.Reviews.Count > 1)
+            {
+                List<int> ratings = new List<int>();
+                foreach (var rev in product.Reviews)
+                {
+                    ratings.Add(rev.rating);
+                }
+                int avgRate = (int)Math.Round(ratings.Average());
+                return avgRate;
+            } else {
+                return 0;
+            }
+        }
     }
 }
