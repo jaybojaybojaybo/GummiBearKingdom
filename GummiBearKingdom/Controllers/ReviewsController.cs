@@ -24,19 +24,30 @@ namespace GummiBearKingdom.Controllers
         public async Task<IActionResult> Index(int? productId)
         {
             var gummiDbContext = _context.Reviews.Include(r => r.Product);
-            return View(await gummiDbContext.ToListAsync());
+            List<Review> reviewList = await gummiDbContext.ToListAsync();
+            List<Review> reviewsForProduct = new List<Review>();
+            foreach(var rev in reviewList)
+            {
+                if(rev.ProductId == productId)
+                {
+                    reviewsForProduct.Add(rev);
+                }
+            }
+            return View(reviewsForProduct);
         }
 
         //GET: Product/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int productId)
         {
+            Product product = _context.Products
+                .SingleOrDefault(p => p.ProductId == productId);
             ViewData["ProductName"] = new SelectList(_context.Products, "ProductId", "Name");
-            return View();
+            return View(product);
         }
 
         //POST: Product/Create
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("ReviewId, Author, Content_Body, rating, ProductId")] Review review)
+        public async Task<IActionResult> Create(int productId, [Bind("ReviewId, Author, Content_Body, rating, ProductId")] Review review)
         {
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "ProductId", review.ProductId);
             _context.Add(review);
