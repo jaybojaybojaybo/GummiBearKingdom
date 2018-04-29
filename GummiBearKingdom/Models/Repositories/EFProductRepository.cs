@@ -31,5 +31,7 @@ namespace GummiBearKingdom.Models
             db.Products.Remove(product);
             db.SaveChanges();
         }
+
+        public IQueryable<Review> Reviews { get { return db.Reviews; } }
     }
 }

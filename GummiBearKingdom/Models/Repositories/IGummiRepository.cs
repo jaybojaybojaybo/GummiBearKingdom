@@ -11,5 +11,6 @@ namespace GummiBearKingdom.Models
         Product Save(Product product);
         Product Edit(Product product);
         void Remove(Product product);
+        IQueryable<Review> Reviews { get; }
     }
 }
