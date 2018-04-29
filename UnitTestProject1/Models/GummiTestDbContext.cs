@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GummiBearKingdom.Models
 {
-    public class GummiTestDbContext : DbContext
+    public class GummiTestDbContext : GummiDbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Review> Reviews { get; set; }
+        public override DbSet<Product> Products { get; set; }
+        public override DbSet<Category> Categories { get; set; }
+        public override DbSet<Review> Reviews { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder

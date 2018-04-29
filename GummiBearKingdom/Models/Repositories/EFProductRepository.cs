@@ -8,7 +8,19 @@ namespace GummiBearKingdom.Models
 {
     public class EFProductRepository : IGummiRepository
     {
+        
+
         GummiDbContext db = new GummiDbContext();
+
+        public EFProductRepository()
+        {
+            db = new GummiDbContext();
+        }
+
+        public EFProductRepository(GummiDbContext thisDb)
+        {
+            db = thisDb;
+        }
 
         public IQueryable<Product> Products { get { return db.Products; } }
 

@@ -184,5 +184,30 @@ namespace GummiBearKingdomTests.ControllerTests
             Assert.IsInstanceOfType(resultView, typeof(ViewResult));
         }
 
+
+        //BEGINNING OF INTEGRATION TESTS
+        EFProductRepository db = new EFProductRepository(new GummiTestDbContext());
+
+        [TestMethod]
+        public void DB_CreatesNewEntries_Collection()
+        {
+            //Arrange
+            ProductsController controller = new ProductsController(db);
+            Product testProduct = new Product();
+            testProduct.ProductId = 2;
+            testProduct.Name = "plummi beer";
+            testProduct.Description = "beer made of plums";
+            testProduct.Price = 3;
+            testProduct.CategoryId = 2;
+            testProduct.Reviews = new List<Review>();
+
+            //Act
+            controller.Create(testProduct);
+            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
+
+            //Assert
+            CollectionAssert.Contains(collection, testProduct);
+        }
+
     }
 }
