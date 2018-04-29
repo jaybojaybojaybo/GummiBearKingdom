@@ -39,7 +39,7 @@ namespace GummiBearKingdom.Models
 
         public int GetAvgRate(Product product)
         {
-            if (product.Reviews.Count > 1)
+            if (product.Reviews.Count > 0)
             {
                 List<int> ratings = new List<int>();
                 foreach (var rev in product.Reviews)

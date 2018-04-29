@@ -24,7 +24,10 @@ namespace GummiBearKingdom.Controllers
             var gummiDbContext = _context.Products
                 .Include(p => p.Category)
                 .Include(r => r.Reviews);
-            return View(await gummiDbContext.ToListAsync());
+            List<Product> productList = await gummiDbContext.ToListAsync();
+            List<Product> reviewedList = productList.OrderByDescending(r => r.Reviews.Count).ToList();
+            List<Product> top3 = reviewedList.Take(3).ToList();
+            return View(top3);
         }
 
         public IActionResult Contact()

@@ -185,6 +185,7 @@ namespace GummiBearKingdom.Controllers
         public async Task<IActionResult> DeleteAllConfirmed()
         {
             _context.Database.ExecuteSqlCommand("TRUNCATE TABLE products");
+            _context.Database.ExecuteSqlCommand("TRUNCATE TABLE reviews");
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
