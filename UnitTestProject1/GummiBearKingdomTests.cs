@@ -121,5 +121,26 @@ namespace GummiBearKingdom.Tests
             //Assert
             Assert.AreEqual(3, avgRate);
         }
+
+        [TestMethod]
+        public void RatingValue_FiltersWrongRatingInput_Error()
+        {
+            //Arrange
+            GummiTestDbContext context = new GummiTestDbContext();
+            Review review1 = new Review();
+            review1.ReviewId = 1;
+            review1.Author = "A";
+            review1.Content_Body = "awesome";
+            review1.rating = 6;
+            review1.ProductId = 1;
+
+            //Act
+            context.SaveChanges();
+            List<Review> reviewList = context.Reviews.ToList();
+
+            //Assert
+            Assert.AreEqual(reviewList.Count, 0);
+
+        }
     }
 }
