@@ -34,17 +34,17 @@ namespace GummiBearKingdom.Controllers
             return View(reviewRepo.Reviews.ToList());
         }
 
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //public IActionResult Create(Review review)
-        //{
-        //    reviewRepo.Save(review);
-        //    return RedirectToAction("Index");
-        //}
+        [HttpPost]
+        public IActionResult Create(Review review)
+        {
+            reviewRepo.Save(review);
+            return RedirectToAction("Index");
+        }
     }
         //End of MockDatabase setup
 

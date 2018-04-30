@@ -32,6 +32,7 @@ namespace GummiBearKingdomTests.ControllerTests
         {
             GummiTestDbContext context = new GummiTestDbContext();
             context.Database.ExecuteSqlCommand("TRUNCATE TABLE products");
+            context.Database.ExecuteSqlCommand("TRUNCATE TABLE reviews");
         }
 
         Mock<IGummiRepository> mock = new Mock<IGummiRepository>();
@@ -333,6 +334,27 @@ namespace GummiBearKingdomTests.ControllerTests
 
             //Assert
             Assert.AreEqual(0, collection.Count);
+            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
+        }
+
+        [TestMethod]
+        public void DB_PostIndexReviews_Review()
+        {
+            //Arrange
+            ReviewsController controller = new ReviewsController(db);
+            Review review1 = new Review();
+            review1.ReviewId = 1;
+            review1.Author = "A";
+            review1.Content_Body = "awesome";
+            review1.rating = 1;
+            review1.ProductId = 1;
+
+            //Act
+            var result = (RedirectToActionResult)controller.Create(review1);
+            List<Review> collection = (controller.Index() as ViewResult).ViewData.Model as List<Review>;
+
+            //Assert
+            CollectionAssert.Contains(collection, review1);
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
         }
     }

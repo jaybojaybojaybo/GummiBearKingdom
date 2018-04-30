@@ -44,5 +44,12 @@ namespace GummiBearKingdom.Models
         }
 
         public IQueryable<Review> Reviews { get { return db.Reviews; } }
+
+        public Review Save(Review review)
+        {
+            db.Reviews.Add(review);
+            db.SaveChanges();
+            return review;
+        }
     }
 }
