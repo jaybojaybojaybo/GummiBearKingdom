@@ -81,6 +81,17 @@ namespace GummiBearKingdom.Controllers
             productRepo.Remove(thisProduct);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult DeleteAll()
+        {
+            List<Product> allProducts = productRepo.Products.ToList();
+            foreach(var product in allProducts)
+            {
+                productRepo.Remove(product);
+            }
+            return RedirectToAction("Index");
+        }
     }
 
     //End of MockDatabase setup

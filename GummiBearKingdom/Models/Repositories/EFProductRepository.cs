@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GummiBearKingdom.Models
 {
     public class EFProductRepository : IGummiRepository
-    {
-        
+    {        
 
         GummiDbContext db = new GummiDbContext();
 
