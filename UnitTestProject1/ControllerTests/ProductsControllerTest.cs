@@ -272,5 +272,36 @@ namespace GummiBearKingdomTests.ControllerTests
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
+        [TestMethod]
+        public void DB_PostDeleteProduct_Product()
+        {
+            //Arrange
+            ProductsController controller = new ProductsController(db);
+            Product testProduct1 = new Product();
+            testProduct1.ProductId = 1;
+            testProduct1.Name = "plummi beer";
+            testProduct1.Description = "beer made of plums";
+            testProduct1.Price = 3;
+            testProduct1.CategoryId = 2;
+            testProduct1.Reviews = new List<Review>();
+            controller.Create(testProduct1);
+
+            Product testProduct2 = new Product();
+            testProduct2.ProductId = 2;
+            testProduct2.Name = "gummi bear";
+            testProduct2.Description = "yummy treat";
+            testProduct2.Price = 3;
+            testProduct2.CategoryId = 2;
+            controller.Create(testProduct2);
+
+            //Act
+            var result = (RedirectToActionResult)controller.DeleteConfirmed(testProduct1.ProductId);
+            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
+
+            //Assert
+            Assert.AreEqual(2, collection[0].ProductId);
+            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
+        }
+
     }
 }
