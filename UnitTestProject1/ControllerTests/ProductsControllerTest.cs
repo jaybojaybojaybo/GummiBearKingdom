@@ -7,12 +7,33 @@ using GummiBearKingdom.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace GummiBearKingdomTests.ControllerTests
 {
     [TestClass]
-    public class ProductsControllerTest
+    public class ProductsControllerTest : IDisposable
     {
+        public IConfigurationRoot Configuration { get; set; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            // Add framework services.
+            services.AddMvc();
+            services.AddEntityFrameworkMySql()
+                .AddDbContext<GummiDbContext>(options =>
+                options
+                .UseMySql(Configuration["ConnectionStrings:TestConnection"]));
+        }
+
+        public virtual void Dispose()
+        {
+            GummiTestDbContext context = new GummiTestDbContext();
+            context.Database.ExecuteSqlCommand("TRUNCATE TABLE products");
+        }
+
         Mock<IGummiRepository> mock = new Mock<IGummiRepository>();
 
         private void DbSetup()
@@ -207,6 +228,48 @@ namespace GummiBearKingdomTests.ControllerTests
 
             //Assert
             CollectionAssert.Contains(collection, testProduct);
+        }
+
+        [TestMethod]
+        public void DB_GetViewResultIndex_ActionResult()
+        {
+            //Arrange
+            ProductsController controller = new ProductsController(db);
+
+            //Act
+            var result = controller.Index();
+
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ActionResult));
+        }
+
+        [TestMethod]
+        public void DB_PostProductAfterEdit_Product()
+        {
+            //Arrange 
+            ProductsController controller = new ProductsController(db);
+            Product testProduct = new Product();
+            testProduct.ProductId = 2;
+            testProduct.Name = "plummi beer";
+            testProduct.Description = "beer made of plums";
+            testProduct.Price = 3;
+            testProduct.CategoryId = 2;
+            testProduct.Reviews = new List<Review>();
+            controller.Create(testProduct);
+
+            //Act
+            testProduct.ProductId = 2;
+            testProduct.Name = "plummi beer";
+            testProduct.Description = "beer made of plums";
+            testProduct.Price = 4;
+            testProduct.CategoryId = 2;
+            testProduct.Reviews = new List<Review>();
+            var result = (ViewResult)controller.Edit(testProduct.ProductId);
+            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
+
+            //Assert
+            Assert.AreEqual(4, collection[0].Price);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
     }
