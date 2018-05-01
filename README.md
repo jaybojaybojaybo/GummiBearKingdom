@@ -2,7 +2,7 @@
 #### by Jasun Feddema
 
 ## Description
-Your source for all things Gummi Bear! 
+Your source for all things Gummi Bear!
 
 C#/dotNET web experience.
 
@@ -10,7 +10,7 @@ C#/dotNET web experience.
 
 * As a user, I want to click on a link on the Landing page that takes me to a page that lists all available Products.
 * As a user, I want to be able to click on each Product and see its Details.
-* As an admin user, I want to be able to add and remove individual Products, as well as delete all Products. 
+* As an admin user, I want to be able to add and remove individual Products, as well as delete all Products.
 * As a user, I want to be able to add a review to a product.
 * As a user, I want to see the average rating for a product on its Details page.
 
@@ -31,10 +31,14 @@ C#/dotNET web experience.
 * Open MAMP and start servers.
 * In the command line, enter the following command: "dotnet ef database update"
 
+- OR -
+
+* import the localhost.sql fil into the MAMP server for seeded data
+
 ## Technologies Used
 
 * C#
-* ASP.NET 
+* ASP.NET
 * Entity Framework
 * Visual Studio 2017
 
