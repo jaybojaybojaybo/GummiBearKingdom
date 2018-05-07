@@ -37,10 +37,19 @@ namespace GummiBearKingdom.Models
             return product;
         }
 
-        public void Remove(Product product)
+        public async void Remove(Product product)
         {
             db.Products.Remove(product);
             db.SaveChanges();
+            db.SaveChangesAsync();
+        }
+
+        public async void RemoveAll()
+        {
+            db.Database.ExecuteSqlCommand("TRUNCATE TABLE products");
+            db.Database.ExecuteSqlCommand("TRUNCATE TABLE reviews");
+            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         public IQueryable<Review> Reviews { get { return db.Reviews; } }
@@ -50,6 +59,22 @@ namespace GummiBearKingdom.Models
             db.Reviews.Add(review);
             db.SaveChanges();
             return review;
+        }
+
+        public IQueryable<Category> Categories { get { return db.Categories; } }
+
+        public async void Save(Category category)
+        {
+            db.Categories.Add(category);
+            db.SaveChanges();
+            await db.SaveChangesAsync();
+        }
+
+        public Category Edit(Category category)
+        {
+            db.Entry(category).State = EntityState.Modified;
+            db.SaveChanges();
+            return category;
         }
     }
 }
