@@ -35,15 +35,7 @@ namespace GummiBearKingdom.Tests
         public void Constructor_ReturnsProductName_String()
         {
             //Arrange
-            //Comment in below, when testing constructor
-            //var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
-            //Comment in below, when testing controllers
-            var product = new Product();
-            product.ProductId = 1;
-            product.Name = "gummi bear";
-            product.Description = "yummy treat";
-            product.Price = 3;
-            product.CategoryId = 2;
+            var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
 
 
             //Act
@@ -60,22 +52,12 @@ namespace GummiBearKingdom.Tests
             //Comment in below, when testing constructor
             //var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
             //Comment in below, when testing controllers
-            var product = new Product();
-            product.ProductId = 1;
-            product.Name = "gummi bear";
-            product.Description = "yummy treat";
-            product.Price = 3;
-            product.CategoryId = 2;
+            var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
 
             //Comment in below, when testing constructor
             //var product = new Product(1, "gummi bear", "yummy treat", 3, 2);
             //Comment in below, when testing controllers
-            var product2 = new Product();
-            product2.ProductId = 1;
-            product2.Name = "gummi bear";
-            product2.Description = "yummy treat";
-            product2.Price = 3;
-            product2.CategoryId = 2;
+            var product2 = new Product(1, "gummi bear", "yummy treat", 3, 2);
 
 
             //Act
@@ -90,12 +72,7 @@ namespace GummiBearKingdom.Tests
         public void GetAvgRating_ReturnsAverageRatings_Int()
         {
             //Arrange
-            Product product = new Product();
-            product.ProductId = 1;
-            product.Name = "gummi bear";
-            product.Description = "yummy treat";
-            product.Price = 3;
-            product.CategoryId = 2;
+            Product product = new Product(1, "gummi bear", "yummy treat", 3, 2);
             product.Reviews = new List<Review>();
 
             Review review1 = new Review();

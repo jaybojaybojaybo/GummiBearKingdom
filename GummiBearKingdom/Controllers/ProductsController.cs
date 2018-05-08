@@ -30,21 +30,21 @@ namespace GummiBearKingdom.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var gummiDbContext = productRepo.Products
                 .Include(p => p.Category)
                 .Include(r => r.Reviews);
-            return View(await gummiDbContext.ToListAsync());
+            return View(gummiDbContext.ToList());
         }
 
         //GET: Product/Details/id
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            var product = await productRepo.Products
+            var product = productRepo.Products
                 .Include(p => p.Category)
                 .Include(r => r.Reviews)
-                .SingleOrDefaultAsync(m => m.ProductId == id);
+                .SingleOrDefault(m => m.ProductId == id);
             return View(product);
         }
 
@@ -57,20 +57,19 @@ namespace GummiBearKingdom.Controllers
 
         //POST: Product/Create
         [HttpPost]
-        public IActionResult Create([Bind("ProductId, Name, Description, Price, CategoryId")] Product product)
+        public IActionResult Create(Product product)
         {
             ViewData["CategoryId"] = new SelectList(productRepo.Categories, "CategoryId", "CategoryId", product.CategoryId);
             productRepo.Save(product);
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         //GET: Product/Edit/id
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var product = await productRepo.Products
+            var product = productRepo.Products
                 .Include(p => p.Category)
-                .SingleOrDefaultAsync(c => c.ProductId == id);
+                .SingleOrDefault(c => c.ProductId == id);
             ViewData["CategoryId"] = new SelectList(productRepo.Categories, "CategoryId", "Name");
 
             return View(product);
@@ -78,7 +77,7 @@ namespace GummiBearKingdom.Controllers
 
         //POST: Product/Edit/id
         [HttpPost]
-        public IActionResult Edit(int id, [Bind("ProductId, Name, Description, Price, CategoryId")] Product product)
+        public IActionResult Edit(int id, Product product)
         {
             productRepo.Edit(product);
             ViewData["CategoryId"] = new SelectList(productRepo.Categories, "CategoryId", "CategoryId", product.CategoryId);
@@ -86,32 +85,34 @@ namespace GummiBearKingdom.Controllers
         }
 
         //GET: Product/Delete/id
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var product = await productRepo.Products
+            var product = productRepo.Products
                 .Include(p => p.Category)
-                .SingleOrDefaultAsync(m => m.ProductId == id);
+                .SingleOrDefault(m => m.ProductId == id);
             return View(product);
         }
 
         //POST: Product/Delete/id
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var product = await productRepo.Products.SingleOrDefaultAsync(p => p.ProductId == id);
+            var product = productRepo.Products
+                .Include(r => r.Reviews)
+                .SingleOrDefault(p => p.ProductId == id);
             productRepo.Remove(product);
             return RedirectToAction("Index");
         }
 
         //GET: Product/DeleteAll
-        public async Task<IActionResult> DeleteAll()
+        public IActionResult DeleteAll()
         {
             var gummiDbContext = productRepo.Products.Include(p => p.Category);
-            return View(await gummiDbContext.ToListAsync());
+            return View(gummiDbContext.ToList());
         }
         //POST: Product/Delete/id
         [HttpPost, ActionName("DeleteAll")]
-        public async Task<IActionResult> DeleteAllConfirmed()
+        public IActionResult DeleteAllConfirmed()
         {
             productRepo.RemoveAll();
             return RedirectToAction("Index");

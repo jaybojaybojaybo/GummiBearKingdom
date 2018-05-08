@@ -19,15 +19,26 @@ namespace GummiBearKingdom.Models
         public virtual Category Category { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
 
-        public override bool Equals(System.Object otherProduct)
+        public Product(int productId, string name, string description, int price, int categoryId)
         {
-            if (!(otherProduct is Product))
+            ProductId = productId;
+            Name = name;
+            Description = description;
+            Price = price;
+            CategoryId = categoryId;
+        }
+
+        public Product() { }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (!(obj is Product))
             {
                 return false;
             }
             else
             {
-                Product newProduct = (Product)otherProduct;
+                Product newProduct = (Product)obj;
                 return this.ProductId.Equals(newProduct.ProductId);
             }
         }

@@ -41,18 +41,8 @@ namespace GummiBearKingdomTests.ControllerTests
         {
             mock.Setup(m => m.Products).Returns(new Product[]
             {
-                new Product{
-                    ProductId = 1,
-                    Name = "gummi bear",
-                    Description = "yummy treat",
-                    Price = 3,
-                    CategoryId = 2 },
-                new Product{
-                    ProductId = 2,
-                    Name = "dummy bear",
-                    Description = "funny toy",
-                    Price = 12,
-                    CategoryId = 1 }
+                new Product(1, "gummi bear", "yummy treat", 3, 2),
+                new Product(1, "dummy bear", "funny toy", 12, 1)
             }.AsQueryable());
         }
 
@@ -61,28 +51,29 @@ namespace GummiBearKingdomTests.ControllerTests
         {
             //Arrange
             ProductsController controller = new ProductsController();
-            IActionResult actionResult = controller.Index();
-            ViewResult indexView = new ProductsController(mock.Object).Index() as ViewResult;
+            IActionResult actionResult = (IActionResult)controller.Index();
+            var indexView = new ProductsController(mock.Object);
 
             //Act 
-            var result = indexView.ViewData.Model;
+            var asyncTask = indexView.Index() as ViewResult;
+            var result = asyncTask.ViewData.Model;
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(List<Product>));
         }
 
         [TestMethod]
-        public void Mock_GetViewResultIndex_ActionResult()
+        public void Mock_GetViewResultIndex_ViewResult()
         {
             //Arrange
             DbSetup();
             ProductsController controller = new ProductsController(mock.Object);
 
             //Act
-            var result = controller.Index();
+            var result = controller.Index() as ViewResult;
 
             //Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
@@ -90,10 +81,12 @@ namespace GummiBearKingdomTests.ControllerTests
         {
             //Arrange
             DbSetup();
-            ViewResult indexView = new ProductsController(mock.Object).Index() as ViewResult;
+            var indexView = new ProductsController(mock.Object);
+
 
             //Act
-            var result = indexView.ViewData.Model;
+            var asyncTask = indexView.Index() as ViewResult;
+            var result = asyncTask.ViewData.Model;
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(List<Product>));
@@ -105,16 +98,12 @@ namespace GummiBearKingdomTests.ControllerTests
             //Arrange
             DbSetup();
             ProductsController controller = new ProductsController(mock.Object);
-            Product testProduct = new Product();
-            testProduct.ProductId = 1;
-            testProduct.Name = "gummi bear";
-            testProduct.Description = "yummy treat";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
+            Product testProduct = new Product(1, "gummi bear", "yummy treat", 3, 2);
 
             //Act
-            ViewResult indexView = controller.Index() as ViewResult;
-            List<Product> collection = indexView.ViewData.Model as List<Product>;
+            var indexView = new ProductsController(mock.Object);
+            var asyncTask = indexView.Index() as ViewResult;
+            List<Product> collection = asyncTask.ViewData.Model as List<Product>;
 
             //Assert
             CollectionAssert.Contains(collection, testProduct);
@@ -124,12 +113,7 @@ namespace GummiBearKingdomTests.ControllerTests
         public void Mock_PostViewResultCreate_ViewResult()
         {
             //Arrange
-            Product testProduct = new Product();
-            testProduct.ProductId = 1;
-            testProduct.Name = "gummi bear";
-            testProduct.Description = "yummy treat";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
+            Product testProduct = new Product(1, "gummi bear", "yummy treat", 3, 2);
 
             DbSetup();
             ProductsController controller = new ProductsController(mock.Object);
@@ -145,35 +129,23 @@ namespace GummiBearKingdomTests.ControllerTests
         public void Mock_GetDetails_ReturnsView()
         {
             //Arrange
-            Product testProduct = new Product();
-            testProduct.ProductId = 1;
-            testProduct.Name = "gummi bear";
-            testProduct.Description = "yummy treat";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
-
             DbSetup();
+            Product testProduct = new Product(9, "gummi bear", "yummy treat", 3, 2);
             ProductsController controller = new ProductsController(mock.Object);
 
             //Act
-            var resultView = controller.Details(testProduct.ProductId) as ViewResult;
-            var model = resultView.ViewData.Model as Product;
+            ViewResult resultView = controller.Details(testProduct.ProductId) as ViewResult;
+            Product model = resultView.ViewData.Model as Product;
 
             //Assert
-            Assert.IsInstanceOfType(resultView, typeof(ViewResult));
-            Assert.IsInstanceOfType(model, typeof(Product));
+            Assert.IsInstanceOfType(resultView, typeof(ActionResult));
         }
 
         [TestMethod]
         public void Mock_PostResultViewEdit_ViewResult()
         {
             //Arrange
-            Product testProduct = new Product();
-            testProduct.ProductId = 2;
-            testProduct.Name = "plummi beer";
-            testProduct.Description = "beer made of plums";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
+            Product testProduct = new Product(2, "plummi beer", "beer made of plums", 3, 2);
 
             DbSetup();
             ProductsController controller = new ProductsController(mock.Object);
@@ -189,12 +161,7 @@ namespace GummiBearKingdomTests.ControllerTests
         public void Mock_PostResultViewDelete_ViewResult()
         {
             //Arrange
-            Product testProduct = new Product();
-            testProduct.ProductId = 2;
-            testProduct.Name = "plummi beer";
-            testProduct.Description = "beer made of plums";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
+            Product testProduct = new Product(2, "plummi beer", "beer made of plums", 3, 2);
 
             DbSetup();
             ProductsController controller = new ProductsController(mock.Object);
@@ -204,158 +171,6 @@ namespace GummiBearKingdomTests.ControllerTests
 
             //Assert
             Assert.IsInstanceOfType(resultView, typeof(ViewResult));
-        }
-
-
-        //BEGINNING OF INTEGRATION TESTS
-        EFProductRepository db = new EFProductRepository(new GummiTestDbContext());
-
-        [TestMethod]
-        public void DB_CreatesNewEntries_Collection()
-        {
-            //Arrange
-            ProductsController controller = new ProductsController(db);
-            Product testProduct = new Product();
-            testProduct.ProductId = 2;
-            testProduct.Name = "plummi beer";
-            testProduct.Description = "beer made of plums";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
-            testProduct.Reviews = new List<Review>();
-
-            //Act
-            controller.Create(testProduct);
-            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
-
-            //Assert
-            CollectionAssert.Contains(collection, testProduct);
-        }
-
-        [TestMethod]
-        public void DB_GetViewResultIndex_ActionResult()
-        {
-            //Arrange
-            ProductsController controller = new ProductsController(db);
-
-            //Act
-            var result = controller.Index();
-
-            //Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
-        }
-
-        [TestMethod]
-        public void DB_PostProductAfterEdit_Product()
-        {
-            //Arrange 
-            ProductsController controller = new ProductsController(db);
-            Product testProduct = new Product();
-            testProduct.ProductId = 2;
-            testProduct.Name = "plummi beer";
-            testProduct.Description = "beer made of plums";
-            testProduct.Price = 3;
-            testProduct.CategoryId = 2;
-            testProduct.Reviews = new List<Review>();
-            controller.Create(testProduct);
-
-            //Act
-            testProduct.ProductId = 2;
-            testProduct.Name = "plummi beer";
-            testProduct.Description = "beer made of plums";
-            testProduct.Price = 4;
-            testProduct.CategoryId = 2;
-            testProduct.Reviews = new List<Review>();
-            var result = (ViewResult)controller.Edit(testProduct.ProductId);
-            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
-
-            //Assert
-            Assert.AreEqual(4, collection[0].Price);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
-        }
-
-        [TestMethod]
-        public void DB_PostDeleteProduct_Product()
-        {
-            //Arrange
-            ProductsController controller = new ProductsController(db);
-            Product testProduct1 = new Product();
-            testProduct1.ProductId = 1;
-            testProduct1.Name = "plummi beer";
-            testProduct1.Description = "beer made of plums";
-            testProduct1.Price = 3;
-            testProduct1.CategoryId = 2;
-            testProduct1.Reviews = new List<Review>();
-            controller.Create(testProduct1);
-
-            Product testProduct2 = new Product();
-            testProduct2.ProductId = 2;
-            testProduct2.Name = "gummi bear";
-            testProduct2.Description = "yummy treat";
-            testProduct2.Price = 3;
-            testProduct2.CategoryId = 2;
-            controller.Create(testProduct2);
-
-            //Act
-            var result = (RedirectToActionResult)controller.DeleteConfirmed(testProduct1.ProductId);
-            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
-
-            //Assert
-            Assert.AreEqual(2, collection[0].ProductId);
-            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-        }
-
-        [TestMethod]
-        public void DB_PostDeleteAllProducts_Product()
-        {
-            //Arrange
-            ProductsController controller = new ProductsController(db);
-            Product testProduct1 = new Product();
-            testProduct1.ProductId = 1;
-            testProduct1.Name = "plummi beer";
-            testProduct1.Description = "beer made of plums";
-            testProduct1.Price = 3;
-            testProduct1.CategoryId = 2;
-            testProduct1.Reviews = new List<Review>();
-            controller.Create(testProduct1);
-
-            Product testProduct2 = new Product();
-            testProduct2.ProductId = 2;
-            testProduct2.Name = "gummi bear";
-            testProduct2.Description = "yummy treat";
-            testProduct2.Price = 3;
-            testProduct2.CategoryId = 2;
-            controller.Create(testProduct2);
-
-            //Act
-            GummiTestDbContext context = new GummiTestDbContext();
-            context.Database.ExecuteSqlCommand("TRUNCATE TABLE products");
-            var result = (RedirectToActionResult)controller.DeleteAll();
-            List<Product> collection = (controller.Index() as ViewResult).ViewData.Model as List<Product>;
-
-            //Assert
-            Assert.AreEqual(0, collection.Count);
-            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-        }
-
-        [TestMethod]
-        public void DB_PostIndexReviews_Review()
-        {
-            //Arrange
-            ReviewsController controller = new ReviewsController(db);
-            Review review1 = new Review();
-            review1.ReviewId = 1;
-            review1.Author = "A";
-            review1.Content_Body = "awesome";
-            review1.rating = 1;
-            review1.ProductId = 1;
-
-            //Act
-            var result = (RedirectToActionResult)controller.Create(review1);
-            List<Review> collection = (controller.Index() as ViewResult).ViewData.Model as List<Review>;
-
-            //Assert
-            CollectionAssert.Contains(collection, review1);
-            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
         }
     }
 }
